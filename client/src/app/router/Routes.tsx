@@ -4,6 +4,7 @@ import HomePage from "../../features/home/homePage.tsx";
 import ActivityForm from "../../features/activities/form/ActivityForm.tsx";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard.tsx";
 import ActivityDetails from "../../features/activities/details/ActivityDetails.tsx";
+import Counter from "../../features/counter.tsx";
 
 export const router = createBrowserRouter([{
     path: '/',
@@ -14,5 +15,6 @@ export const router = createBrowserRouter([{
         { path: 'activities/:id', element: <ActivityDetails /> },
         { path: 'create', element: <ActivityForm key='create'/> },
         { path: 'update/:id', element: <ActivityForm /> },
+        { path: 'counter', element: <Counter /> },
     ]
 }])
