@@ -1,3 +1,4 @@
+using Application.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,5 +14,15 @@ public class ApiController : Controller
 
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>() ??
                                                       throw new InvalidOperationException("Mediator not registered");
+
+        protected ActionResult HandleResult<T>(Result<T> result)
+        {
+            return result switch
+            {
+                { IsSuccess: false, Code: 404 } => NotFound(),
+                { IsSuccess: true, Value: not null } => Ok(result.Value),
+                _ => BadRequest(result.Error)
+            };
+        }
     }
 }
