@@ -6,9 +6,9 @@ import {useEffect} from "react";
 import {activitySchema, type ActivitySchema} from "../../../lib/schemas/activitySchema.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
 import TextInput from "../../../app/shared/components/TextInput.tsx";
-import SelectInput from "../../../app/shared/components/selectInput.tsx";
+import SelectInput from '../../../app/shared/components/SelectInput.tsx';
 import {categoryOptions} from "./categoryOptions.ts";
-import DateTimeInput from "../../../app/shared/components/dateTimeInput.tsx";
+import DateTimeInput from '../../../app/shared/components/DateTimeInput.tsx';
 import LocationInput from "../../../app/shared/components/LocationInput.tsx";
 
 export default function ActivityForm() {

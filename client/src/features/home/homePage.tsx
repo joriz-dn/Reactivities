@@ -29,11 +29,11 @@ export default function HomePage() {
                 }}/>
                 <Typography variant="h1"> Reactivities </Typography>
             </Box>
-            <Button component={Link} to='/activities' size="large" variant="contained" sx={{
+            <Button component={Link} to='/login' size="large" variant="contained" sx={{
                 height: 80,
                 borderRadius: 1,
                 fontSize: '1.5rem'
-            }}>Let's go.</Button>
+            }}>Log me in!</Button>
         </Paper>
     );
 }

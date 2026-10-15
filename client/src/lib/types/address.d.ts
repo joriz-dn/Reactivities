@@ -1,4 +1,4 @@
-export type LocationIQSuggestion = {
+type LocationIQSuggestion = {
     place_id: string
     osm_id: string
     osm_type: string
@@ -14,7 +14,7 @@ export type LocationIQSuggestion = {
     address: Address
 }
 
-export type LocationIQAddress = {
+type LocationIQAddress = {
     name: string
     state: string
     country: string
