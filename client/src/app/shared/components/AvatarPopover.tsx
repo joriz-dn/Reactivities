@@ -1,0 +1,57 @@
+import * as React from 'react';
+import Popover from '@mui/material/Popover';
+import {useState} from "react";
+import {Link} from "react-router";
+import {Avatar} from "@mui/material";
+import ProfileCard from "../../../features/profiles/ProfileCard.tsx";
+
+type Props = {
+    profile: Profile;
+}
+
+export default function AvatarPopover({profile}: Props) {
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+    const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handlePopoverClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+
+    return (
+        <div>
+            <Avatar
+                alt={profile.displayName + 'image'}
+                src={profile.imageUrl || `/images/${profile.displayName}.png`}
+                component={Link}
+                to={`/profiles/${profile.id}`}
+                style={{ textDecoration: 'none' }}
+                onMouseEnter={handlePopoverOpen}
+                onMouseLeave={handlePopoverClose}
+            >
+            </Avatar>
+            <Popover
+                id="mouse-over-popover"
+                sx={{ pointerEvents: 'none' }}
+                open={open}
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                onClose={handlePopoverClose}
+                disableRestoreFocus
+            >
+                <ProfileCard profile={profile}></ProfileCard>
+            </Popover>
+        </div>
+    );
+}

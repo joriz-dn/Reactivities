@@ -1,6 +1,5 @@
 import {
-    Avatar,
-    Box,
+    Avatar, Box,
     Button,
     Card,
     CardContent,
@@ -12,20 +11,19 @@ import {
 import {Link} from "react-router";
 import {AccessTime, Place} from "@mui/icons-material";
 import {formatDate} from "../../../lib/util/util";
+import AvatarPopover from "../../../app/shared/components/AvatarPopover.tsx";
 
 type Props = {
     activity: Activity
 }
 export default function ActivityCard({activity}: Props) {
-    const isHost = false;
-    const isGoing = false;
-    const label = isHost ? 'You are hosting' : 'You are going';
-    const isCancelled = false;
-    const color = isHost ? 'secondary' : isGoing ? 'warning' : 'default';
+    const label = activity.isHost ? 'You are Hosting' : 'You are going!';
+    const color = activity.isHost ? 'primary' : activity.isGoing ? 'success' : 'default';
+    const variance = activity.isHost ? 'outlined' : activity.isGoing ? 'warning' : 'default'; 
     
     return (
         <Card sx={{borderRadius: 3}}>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', textDecoration: 'none' }}>
                 <CardHeader
                     disableTypography={false}
                     avatar={<Avatar sx={{height: 40, width:40}} />}
@@ -35,14 +33,14 @@ export default function ActivityCard({activity}: Props) {
                         </Typography>
                     }
                     subheader={
-                       <>
-                        Hosted by <Link to={`/profiles/bob`}>Bob</Link>
-                       </>
+                       <Box>
+                        Hosted by <Link style={{ textDecoration: 'none' }} to={`/profiles/${activity.hostId}`}>{activity.hostDisplayName}</Link>
+                       </Box>
                     }
                 />
-                <Box sx={{display: "flex", flexDirection:"column", gap:2, mr: 2}}>
-                    {(isHost || isGoing) && <Chip label={label} color={color} sx={{borderRadius: 2}}></Chip>}
-                    {isCancelled && <Chip label="cancelled" color="error"></Chip>}
+                <Box sx={{display: "flex", flexDirection:"column", gap:1, m: 2}}>
+                    {(activity.isHost || activity.isGoing) && <Chip label={label} color={color} sx={{borderRadius: 1}} variant={variance}></Chip>}
+                    {activity.isCancelled && <Chip label="Cancelled" color="error" sx={{borderRadius: 1}} variant="outlined"></Chip>}
                 </Box>
             </Box>
             
@@ -63,7 +61,9 @@ export default function ActivityCard({activity}: Props) {
                 </Box>
                 <Divider />
                 <Box sx={{display: "flex", gap: 2, backgroundColor: "grey.100", py:3, pl:3}}>
-                    Attendees go here.
+                    {activity.attendees.map(att => (
+                        <AvatarPopover key={att.id} profile={att}></AvatarPopover>
+                    ))}
                 </Box>
             </CardContent>
             <CardContent sx={{ pb: 2}}>

@@ -31,8 +31,8 @@ export default function ActivityDetailsChat() {
                     <Box>
                         <Box sx={{ display: 'flex', my: 2 }}>
                             <Avatar src={'/images/user.png'} alt={'user image'} sx={{ mr: 2 }} />
-                            <Box display='flex' flexDirection='column'>
-                                <Box display='flex' alignItems='center' gap={3}>
+                            <Box sx={{display:"flex", flexDirection:"column"}}>
+                                <Box sx={{display:"flex", alignItems:"column", gap: 3}}>
                                     <Typography component={Link} to={`/profiles/username`} variant="subtitle1" sx={{ fontWeight: 'bold', textDecoration: 'none' }}>
                                         Bob
                                     </Typography>
@@ -40,7 +40,6 @@ export default function ActivityDetailsChat() {
                                         2 hours ago
                                     </Typography>
                                 </Box>
-
                                 <Typography sx={{ whiteSpace: 'pre-wrap' }}>Comment goes here</Typography>
                             </Box>
                         </Box>

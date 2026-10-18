@@ -10,7 +10,7 @@ import UserMenu from "./UserMenu.tsx";
 export default function NavBar() {
     const {uiStore} = useStore();
     const {currentUser} = useAccount();
-    
+    const redirect = currentUser ? '/activities' : '/';
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar 
@@ -24,7 +24,7 @@ export default function NavBar() {
                     <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
                         <Box>
                             <MenuList>
-                                <MenuItem component={NavLink} to="/" sx={{display: 'flex', gap: 2}}>
+                                <MenuItem component={NavLink} to={redirect} sx={{display: 'flex', gap: 2}}>
                                     <Group fontSize='large'/>
                                     <Typography variant="h4" sx={{fontWeight:'bold'}}>Reactivities</Typography>
                                 </MenuItem>
