@@ -18,7 +18,7 @@ function ProfileCard({ profile }: Props) {
             }} elevation={4}>
                 <CardMedia 
                     component="img" 
-                    src={profile?.imageUrl || `/images/${profile.displayName}.png`}
+                    src={profile?.imageUrl || '/images/user.png'}
                     sx={{width: 200, zIndex: 50}}
                     alt={profile.displayName + 'image'}
                 >

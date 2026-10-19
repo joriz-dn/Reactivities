@@ -31,7 +31,7 @@ export default function ActivityDetailsSidebar({activity}: Props) {
                                             <Avatar
                                                 variant="rounded"
                                                 alt={attendee.displayName + "images"}
-                                                src={`/images/${attendee.displayName}.png`}
+                                                src={attendee.imageUrl || `/images/user.png`}
                                                 sx={{width:75, height:75, mr:3}}
                                             />
                                         </ListItemAvatar>
