@@ -19,3 +19,11 @@ type Activity = {
     hostImageUrl: string
 }
 
+type ChatComment = {
+    id: string
+    createAt: Date
+    body: string
+    userId: string
+    displayName: string
+    imageUrl?: string
+}

@@ -1,4 +1,5 @@
 using Application.Profiles.Commands;
+using Application.Profiles.DTOs;
 using Application.Profiles.Queries;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -41,5 +42,11 @@ public class ProfileController : ApiController.BaseApiController
     public async Task<ActionResult<Photo>> CleanUpPhotos()
     {
         return HandleResult(await Mediator.Send(new CleanupGallery.Command{}));
+    }
+    
+    [HttpPut("{userId}/edit")]
+    public async Task<ActionResult<Photo>> EditProfile([FromRoute] string userId,  [FromBody] EditProfileDto profile)
+    {
+        return HandleResult(await Mediator.Send(new EditProfile.Command { EditProfileDto = profile }));
     }
 }

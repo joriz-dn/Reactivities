@@ -16,7 +16,7 @@ function samePageLinkNavigation(
 }
 
 export default function ProfileContent() {
-    const [value, setValue] = useState(1);
+    const [value, setValue] = useState(0);
     
     const tabContent = [
         {label: "About", content:<ProfileAbout />},

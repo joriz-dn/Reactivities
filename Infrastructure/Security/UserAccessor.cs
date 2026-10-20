@@ -16,9 +16,9 @@ public class UserAccessor(IHttpContextAccessor httpContextAccessor, AppDbContext
                ?? throw new Exception("No user found");
     }
 
-    public async Task<User> GetUserAsync()
+    public async Task<User> GetUserAsync(CancellationToken cancellationToken = default)
     {
-        return await appDbContext.Users.FindAsync(GetUserId())
+        return await appDbContext.Users.FindAsync(GetUserId(), cancellationToken)
             ?? throw new UnauthorizedAccessException("No user is logged in");
     }
 
