@@ -10,6 +10,7 @@ import SelectInput from '../../../app/shared/components/SelectInput.tsx';
 import {categoryOptions} from "./categoryOptions.ts";
 import DateTimeInput from '../../../app/shared/components/DateTimeInput.tsx';
 import LocationInput from "../../../app/shared/components/LocationInput.tsx";
+import type {Activity} from "../../../lib/types";
 
 export default function ActivityForm() {
     const navigate = useNavigate();

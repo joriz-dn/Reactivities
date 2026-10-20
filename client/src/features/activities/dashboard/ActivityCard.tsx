@@ -12,6 +12,8 @@ import {Link} from "react-router";
 import {AccessTime, Place} from "@mui/icons-material";
 import {formatDate} from "../../../lib/util/util";
 import AvatarPopover from "../../../app/shared/components/AvatarPopover.tsx";
+import type {Profile} from "../../../lib/types/profile.ts";
+import type {Activity} from "../../../lib/types";
 
 type Props = {
     activity: Activity
@@ -26,7 +28,7 @@ export default function ActivityCard({activity}: Props) {
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', textDecoration: 'none' }}>
                 <CardHeader
                     disableTypography={false}
-                    avatar={<Avatar sx={{height: 40, width:40}} />}
+                    avatar={<Avatar src={activity.hostImageUrl} sx={{height: 60, width:60}} />}
                     title={
                         <Typography sx={{ fontWeight:"bold", fontSize:20}}>
                             {activity.title}
@@ -61,7 +63,7 @@ export default function ActivityCard({activity}: Props) {
                 </Box>
                 <Divider />
                 <Box sx={{display: "flex", gap: 2, backgroundColor: "grey.100", py:3, pl:3}}>
-                    {activity.attendees.map(att => (
+                    {activity.attendees.map((att: Profile) => (
                         <AvatarPopover key={att.id} profile={att}></AvatarPopover>
                     ))}
                 </Box>

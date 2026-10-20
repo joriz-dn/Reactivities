@@ -4,6 +4,7 @@ import {useState} from "react";
 import {Link} from "react-router";
 import {Avatar} from "@mui/material";
 import ProfileCard from "../../../features/profiles/ProfileCard.tsx";
+import type {Profile} from "../../../lib/types/profile.ts";
 
 type Props = {
     profile: Profile;
@@ -28,7 +29,7 @@ export default function AvatarPopover({profile}: Props) {
                 alt={profile.displayName + 'image'}
                 src={profile.imageUrl || `/images/user.png`}
                 component={Link}
-                to={`/profiles/${profile.id}`}
+                to={`/profile/${profile.id}`}
                 style={{ textDecoration: 'none' }}
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}

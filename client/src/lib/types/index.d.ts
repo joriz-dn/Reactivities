@@ -1,3 +1,5 @@
+import type {Profile} from "./profile.ts";
+
 type Activity = {
     id: string
     title: string
@@ -14,11 +16,6 @@ type Activity = {
     isHost: boolean
     hostId: string
     hostDisplayName: string
+    hostImageUrl: string
 }
 
-type Profile = {
-    id: string
-    displayName: string
-    bio?: string
-    imageUrl?: string
-}

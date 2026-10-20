@@ -36,4 +36,10 @@ public class ProfileController : ApiController.BaseApiController
     {
         return HandleResult(await Mediator.Send(new SetMainPhoto.Command { PhotoId = photoId }));
     }
+    
+    [HttpDelete("{userId}/photos/clean-up")]
+    public async Task<ActionResult<Photo>> CleanUpPhotos()
+    {
+        return HandleResult(await Mediator.Send(new CleanupGallery.Command{}));
+    }
 }

@@ -1,6 +1,7 @@
 import {Link} from "react-router";
 import {Box, Card, CardContent, CardMedia, Chip, Divider, Typography} from "@mui/material";
 import {Person} from "@mui/icons-material";
+import type {Profile} from "../../lib/types/profile.ts";
 
 type Props = {
     profile: Profile
@@ -19,13 +20,26 @@ function ProfileCard({ profile }: Props) {
                 <CardMedia 
                     component="img" 
                     src={profile?.imageUrl || '/images/user.png'}
-                    sx={{width: 200, zIndex: 50}}
+                    sx={{width: '100%', zIndex: 50}}
                     alt={profile.displayName + 'image'}
                 >
                 </CardMedia>
                 <CardContent>
-                    <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
+                    <Box sx={{display: 'flex', flexDirection:'column', gap: 1}}>
                         <Typography variant="h5">{profile.displayName}</Typography>
+                        {
+                            profile.bio && (
+                                <Typography
+                                    sx={{
+                                        textOverflow: 'ellipsis',
+                                        overflow: 'hidden',
+                                        whiteSpace: 'nowrap',
+                                    }}
+                                >
+                                    {profile.bio}
+                                </Typography>
+                            )
+                        }
                         {following ?? <Chip size="small" label="Following" color="secondary" variant="outlined"></Chip>}
                     </Box>
                 </CardContent>
