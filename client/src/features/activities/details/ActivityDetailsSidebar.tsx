@@ -1,11 +1,11 @@
 import { Paper, Typography, List, ListItem, Chip, ListItemAvatar, Avatar, ListItemText, Grid } from "@mui/material";
+import type {Activity} from "../../../lib/types";
 
 type Props = {
     activity: Activity
 }
 
 export default function ActivityDetailsSidebar({activity}: Props) {
-    const following = true;
     return (
         <>
             <Paper
@@ -37,7 +37,7 @@ export default function ActivityDetailsSidebar({activity}: Props) {
                                         </ListItemAvatar>
                                         <ListItemText>
                                             <Typography variant="h6">{attendee.displayName}</Typography>
-                                            {following && (
+                                            {attendee.following && (
                                                 <Typography variant="caption" color="primary">
                                                     Following
                                                 </Typography>

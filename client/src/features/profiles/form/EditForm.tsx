@@ -38,6 +38,10 @@ function EditForm({handleIsEditing}: Props) {
             editProfile.mutate({...profile, ...data}, {
                 onSuccess: () => {
                     handleIsEditing(false);
+                    reset({
+                        displayName: "",
+                        bio:"",
+                    });
                 }
             })
         }

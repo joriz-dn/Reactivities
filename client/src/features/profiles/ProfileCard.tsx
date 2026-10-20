@@ -1,14 +1,17 @@
 import {Link} from "react-router";
-import {Box, Card, CardContent, CardMedia, Chip, Divider, Typography} from "@mui/material";
+import {Box, Button, Card, CardContent, CardMedia, Divider, Typography} from "@mui/material";
 import {Person} from "@mui/icons-material";
 import type {Profile} from "../../lib/types/profile.ts";
+import {useAccount} from "../../lib/hooks/useAccount.ts";
 
 type Props = {
     profile: Profile
 }
 
 function ProfileCard({ profile }: Props) {
-    const following = false;
+    const {currentUser} = useAccount();
+    const isOwnProfile = currentUser?.id === profile.id;
+    
     return (
         <Link to={`/profiles/${profile.id}`} style={{ textDecoration: 'none' }}>
             <Card sx={{
@@ -40,13 +43,19 @@ function ProfileCard({ profile }: Props) {
                                 </Typography>
                             )
                         }
-                        {following ?? <Chip size="small" label="Following" color="secondary" variant="outlined"></Chip>}
                     </Box>
                 </CardContent>
                 <Divider sx={{mb: 2}}></Divider>
-                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'start'}}>
-                    <Person></Person>
-                    <Typography sx={{ml: 1}}>20 Followers</Typography>
+                <Box sx={{display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+                    <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'start'}}>
+                        <Person></Person>
+                        <Typography sx={{ml: 1}}>{profile.followersCount} Followers</Typography>
+                    </Box>
+                    {!isOwnProfile && (
+                        <Button>
+                            {profile.following ? 'Unfollow' : 'Follow'}
+                        </Button>
+                    )}
                 </Box>
             </Card>
         </Link>

@@ -7,7 +7,7 @@ import {useState} from "react";
 function ProfileAbout() {
 
     const {id} = useParams();
-    const {profile} = useProfile(id);
+    const {profile, isCurrentUser} = useProfile(id);
     const [isEditing, setIsEditing] = useState<boolean>();
     
     const handleIsEditing = (value : boolean) => {
@@ -16,11 +16,14 @@ function ProfileAbout() {
     
     return (
         <Box>
-            <Box sx={{display:'flex', justifyContent:'end'}}>
-                <Button onClick={() => setIsEditing(!isEditing)}>
-                    {!isEditing ? "Edit" : "Cancel"}
-                </Button>
-            </Box>
+            {
+                isCurrentUser &&
+                <Box sx={{display:'flex', justifyContent:'end'}}>
+                    <Button onClick={() => setIsEditing(!isEditing)}>
+                        {!isEditing ? "Edit" : "Cancel"}
+                    </Button>
+                </Box>
+            }
             <Divider sx={{my:2}} />
             {!isEditing ? (
                 <Box sx={{overflowX: 'auto', maxHeight:350}}>

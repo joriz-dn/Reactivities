@@ -26,7 +26,7 @@ export const useComments = (activityId?: string) => {
             })
             this.hubConnection.on('ReceiveComment', comment => {
                 runInAction(() => {
-                    this.comments.unshift(comment);
+                    this.comments.push(comment);
                 })
             })
         },

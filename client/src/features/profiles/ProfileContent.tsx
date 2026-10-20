@@ -3,6 +3,7 @@ import {useState} from "react";
 import * as React from "react";
 import ProfileGallery from "./ProfileGallery.tsx";
 import ProfileAbout from "./ProfileAbout.tsx";
+import ProfileFollow from "./ProfileFollow.tsx";
 
 function samePageLinkNavigation(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
@@ -22,8 +23,8 @@ export default function ProfileContent() {
         {label: "About", content:<ProfileAbout />},
         {label: "Gallery", content: <ProfileGallery /> },
         {label: "Events", content:<div>Events</div>},
-        {label: "Followers", content:<div>Followers</div>},
-        {label: "Following", content:<div>Following</div>},
+        {label: "Followers", content:<ProfileFollow predicate="followers" />},
+        {label: "Following", content:<ProfileFollow predicate="followings" />},
     ]
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {

@@ -21,7 +21,7 @@ public class GetComments
         {
             var comments = await appDbContext.Comments
                 .Where(x => x.ActivityId == request.ActivityId)
-                .OrderByDescending(x => x.CreateAt)
+                .OrderBy(x => x.CreateAt)
                 .ProjectTo<CommentDto>(mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
             

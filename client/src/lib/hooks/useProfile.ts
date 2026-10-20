@@ -3,7 +3,7 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import type {EditProfile, Photo, Profile} from "../types/profile.ts";
 import {useMemo} from "react";
 
-export const useProfile = (id?: string) => {
+export const useProfile = (id?: string, predicate?: string) => {
     const queryClient = useQueryClient();
     
     //GET Profile
@@ -13,7 +13,8 @@ export const useProfile = (id?: string) => {
             const response = await agent.get<Profile>(`/profile/${id}`)
             return response.data
         },
-        enabled: !!id
+        enabled: !!id && !predicate,
+        staleTime: 5 * 60 * 1000,
     });
     
     // Load Photos
@@ -23,7 +24,8 @@ export const useProfile = (id?: string) => {
             const response = await agent.get(`/profile/${id}/photos`)
             return response.data
         },
-        enabled: !!id,
+        enabled: !!id && !predicate,
+        staleTime: 5 * 60 * 1000,
     })
     
     // Upload Photo
@@ -134,6 +136,56 @@ export const useProfile = (id?: string) => {
         }
     });
     
+    //Get Followings/Followers
+    const {data: followings, isLoading: followingLoading}=
+        useQuery<Profile[]>({
+            queryKey: ['followings', id, predicate],
+            queryFn: async () => {
+                const response = await agent.get(
+                    `/profile/${id}/follow/list?predicate=${predicate}`
+                );
+                return response.data;
+            },
+            enabled: !!id && !!predicate,
+            staleTime: 5 * 60 * 1000,
+        });
+    
+    //Follow or Unfollow
+    const updateFollowing = useMutation({
+        mutationFn: async (follower?: Profile) => {
+            const profileId = follower?.id ?? id;
+            await agent.post(`/profile/${profileId}/follow`)
+        },
+        onSuccess: async(_, follower?:Profile) => {
+            const user = await queryClient.getQueryData(['user']) as User;
+            const isCurrentUser= user?.id === profile?.id;
+            if (!isCurrentUser) {
+                queryClient.setQueryData(['profile', id], (profile: Profile) => {
+                    if(!profile || !profile.followersCount === undefined) return profile;
+                    return {
+                        ...profile,
+                        following: !profile.following,
+                        followersCount: profile.following ? profile.followersCount - 1 : profile.followersCount + 1
+                    }
+                });
+            } else {
+                queryClient.setQueryData(['profile', id], (profile: Profile) => {
+                    if(!profile || !profile.followersCount === undefined) return profile;
+                    return {
+                        ...profile,
+                        followingsCount: !follower?.following ? profile.followingsCount + 1 : profile.followingsCount - 1,
+                    }
+                });
+            }
+            await queryClient.invalidateQueries({
+                queryKey: ['followings', id, 'followers'],
+            });
+            await queryClient.invalidateQueries({
+                queryKey: ['followings', id, 'followings'],
+            });
+        }
+    })
+    
     return {
         profile,
         loadingProfile,
@@ -144,6 +196,9 @@ export const useProfile = (id?: string) => {
         setMainPhoto,
         deletePhoto,
         cleanUpGallery,
-        editProfile
+        editProfile,
+        followings,
+        followingLoading,
+        updateFollowing
     }
 }

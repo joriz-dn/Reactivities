@@ -49,4 +49,16 @@ public class ProfileController : ApiController.BaseApiController
     {
         return HandleResult(await Mediator.Send(new EditProfile.Command { EditProfileDto = profile }));
     }
+    
+    [HttpPost("{userId}/follow")]
+    public async Task<ActionResult<Photo>> FollowProfile([FromRoute] string userId)
+    {
+        return HandleResult(await Mediator.Send(new FollowToggle.Command { TargetUserId = userId }));
+    }
+
+    [HttpGet("{userId}/follow/list")]
+    public async Task<ActionResult<List<UserProfile>>> GetFollowList([FromRoute] string userId, string predicate)
+    {
+        return HandleResult(await Mediator.Send(new GetFollowings.Query { UserId = userId, Predicate = predicate }));
+    }
 }

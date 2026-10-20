@@ -44,7 +44,7 @@ const ActivityDetailsChat = observer (function ActivityDetailsChat() {
             >
                 <Typography variant="h6">Chat about this event</Typography>
             </Box>
-            <Card>
+            <Card sx={{mb:3}}>
                 <CardContent>
                     <div>
                         <form>
@@ -67,7 +67,7 @@ const ActivityDetailsChat = observer (function ActivityDetailsChat() {
                         </form>
                     </div>
 
-                    <Box sx={{height:400, overflow: 'auto'}}>
+                    <Box sx={{height:'auto', overflow: 'auto'}}>
                         {commentStore.comments.map((comment: ChatComment) => (
                             <Box key={comment.id} sx={{ display: 'flex', my: 2 }}>
                                 <Avatar src={comment.imageUrl} alt={'user image'} sx={{ mr: 2 }} />

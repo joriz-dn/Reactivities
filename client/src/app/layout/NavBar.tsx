@@ -1,4 +1,3 @@
-import {Group} from "@mui/icons-material";
 import {AppBar, Box, Container, LinearProgress, MenuItem, MenuList, Toolbar, Typography} from "@mui/material";
 import {NavLink} from "react-router";
 import MenuItemLink from "../shared/components/MenuItemLink.tsx";
@@ -24,9 +23,14 @@ export default function NavBar() {
                     <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
                         <Box>
                             <MenuList>
-                                <MenuItem component={NavLink} to={redirect} sx={{display: 'flex', gap: 2}}>
-                                    <Group fontSize='large'/>
-                                    <Typography variant="h4" sx={{fontWeight:'bold'}}>Reactivities</Typography>
+                                <MenuItem component={NavLink} to={redirect} sx={{display: 'flex', gap: 0.5}}>
+                                    <img
+                                        src='/images/logo.png'
+                                        alt='Camp Half Blood'
+                                        height={50}
+                                        width={50}
+                                    />
+                                    <Typography variant="h4" sx={{fontWeight:'bold'}}>Camp Activities</Typography>
                                 </MenuItem>
                             </MenuList>
                         </Box>

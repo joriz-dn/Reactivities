@@ -30,7 +30,9 @@ export default function AvatarPopover({profile}: Props) {
                 src={profile.imageUrl || `/images/user.png`}
                 component={Link}
                 to={`/profile/${profile.id}`}
-                style={{ textDecoration: 'none' }}
+                style={{ 
+                    textDecoration: 'none'
+                }}
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}
             >

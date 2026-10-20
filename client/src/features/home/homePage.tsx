@@ -1,5 +1,4 @@
 import {Box, Button, Paper, Typography} from "@mui/material";
-import {Group} from "@mui/icons-material";
 import {Link} from "react-router";
 
 export default function HomePage() {
@@ -21,19 +20,26 @@ export default function HomePage() {
                 alignContent:"center",
                 color: "white",
                 gap: 3,
-                flexDirection: "row"
+                flexDirection: "column"
             }}>
-                <Group sx={{
-                    height: 110,
-                    width: 110
-                }}/>
-                <Typography variant="h1"> Reactivities </Typography>
+                <img
+                    src='/images/logo.png'
+                    alt='Camp Half Blood'
+                    height={300}
+                    width={300}
+                />
+                <Typography variant="h2" sx={{
+                    fontWeight: "bold",
+                }}> Camp Half-Blood </Typography>
             </Box>
-            <Button component={Link} to='/login' size="large" variant="contained" sx={{
+            <Button component={Link} to='/login' size="large" sx={{
                 height: 80,
                 borderRadius: 1,
-                fontSize: '1.5rem'
-            }}>Log me in!</Button>
+                fontSize: '1.5rem',
+                color: 'white',
+                textDecoration: 'none',
+                textTransform: 'none',
+            }}>Take me there.</Button>
         </Paper>
     );
 }
