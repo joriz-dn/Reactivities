@@ -3,6 +3,7 @@ import {formatDate} from "../../../lib/util/util.ts";
 import {Link} from "react-router";
 import {useActivities} from "../../../lib/hooks/useActivities.ts";
 import StyledButton from "../../../app/shared/components/StyledButton.tsx";
+import type {Activity} from "../../../lib/types";
 
 type Props = {
     activity : Activity;    

@@ -1,9 +1,9 @@
 import agent from "../api/agent.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import type {EditProfile, Photo, Profile} from "../types/profile.ts";
+import type {EditProfile, Photo, Profile, ProfileActivity} from "../types/profile.ts";
 import {useMemo} from "react";
 
-export const useProfile = (id?: string, predicate?: string) => {
+export const useProfile = (id?: string, predicate?: string, filter?: string) => {
     const queryClient = useQueryClient();
     
     //GET Profile
@@ -165,7 +165,7 @@ export const useProfile = (id?: string, predicate?: string) => {
                     return {
                         ...profile,
                         following: !profile.following,
-                        followersCount: profile.following ? profile.followersCount - 1 : profile.followersCount + 1
+                        followersCount: profile.following ? profile.followersCount??0 - 1 : profile.followersCount??1
                     }
                 });
             } else {
@@ -173,7 +173,7 @@ export const useProfile = (id?: string, predicate?: string) => {
                     if(!profile || !profile.followersCount === undefined) return profile;
                     return {
                         ...profile,
-                        followingsCount: !follower?.following ? profile.followingsCount + 1 : profile.followingsCount - 1,
+                        followingsCount: !follower?.following ? profile.followingsCount??1 : profile.followingsCount??0 - 1,
                     }
                 });
             }
@@ -184,7 +184,21 @@ export const useProfile = (id?: string, predicate?: string) => {
                 queryKey: ['followings', id, 'followings'],
             });
         }
-    })
+    });
+
+    //Get Profile Activities
+    const {data: profileActivities, isLoading: profileActivitiesLoading }=
+        useQuery<ProfileActivity[]>({
+            queryKey: ['profileActivity', id, filter],
+            queryFn: async () => {
+                const response = await agent.get(
+                    `/profile/${id}/activities?filter=${filter}`
+                );
+                return response.data;
+            },
+            enabled: !!id && !!filter,
+            staleTime: 5 * 60 * 1000,
+        });
     
     return {
         profile,
@@ -199,6 +213,8 @@ export const useProfile = (id?: string, predicate?: string) => {
         editProfile,
         followings,
         followingLoading,
-        updateFollowing
+        updateFollowing,
+        profileActivities,
+        profileActivitiesLoading
     }
 }

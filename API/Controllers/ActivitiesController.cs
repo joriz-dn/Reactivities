@@ -1,6 +1,7 @@
 using Application.Activities.Commands;
 using Application.Activities.DTOs;
 using Application.Activities.Queries;
+using Application.Core;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,10 @@ namespace API.Controllers;
 public class ActivitiesController() : ApiController.BaseApiController
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ActivityDto>>> GetActivities(CancellationToken cancellationToken)
+    public async Task<ActionResult<PagedList<ActivityDto, DateTime?>>> GetActivities([FromQuery] ActivityParams activityParams, CancellationToken cancellationToken)
     {
-        return await Mediator.Send(new GetActivityList.Query(), cancellationToken);
+        return HandleResult(await Mediator.Send(new GetActivityList.Query { ActivityParams = activityParams },
+            cancellationToken));
     }
     
     [HttpGet("{id}")]

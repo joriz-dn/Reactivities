@@ -1,25 +1,38 @@
-import {AppBar, Box, Container, LinearProgress, MenuItem, MenuList, Toolbar, Typography} from "@mui/material";
+import {AppBar, Box, Button, Container, LinearProgress, MenuItem, MenuList, Toolbar, Typography} from "@mui/material";
 import {NavLink} from "react-router";
 import MenuItemLink from "../shared/components/MenuItemLink.tsx";
 import {useStore} from "../../lib/hooks/useStore.ts";
 import {Observer} from "mobx-react-lite";
 import {useAccount} from "../../lib/hooks/useAccount.ts";
 import UserMenu from "./UserMenu.tsx";
+import Drawer from "./Drawer.tsx";
+import {MenuRounded} from "@mui/icons-material";
 
 export default function NavBar() {
     const {uiStore} = useStore();
-    const {currentUser} = useAccount();
+    const {currentUser, logoutUser} = useAccount();
     const redirect = currentUser ? '/activities' : '/';
+
+    const handleLogout = () => {
+        logoutUser.mutate();
+    }
+    
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar 
-                position="static"
+                position="fixed"
                 sx={{
                     backgroundImage: 'linear-gradient(135deg, #182a73 0%, #218aae 69%, #20a7ac 89%)',
-                    position: 'relative',
                 }}
             >
                 <Container maxWidth='xl'>
+                    <Button sx={{
+                        position: 'absolute',
+                        top: 15,
+                        right: 10
+                    }}>
+                        <Drawer component={ <MenuRounded sx={{color: 'white'}}/> } handleLogout={handleLogout}></Drawer>
+                    </Button>
                     <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
                         <Box>
                             <MenuList>
@@ -34,17 +47,6 @@ export default function NavBar() {
                                 </MenuItem>
                             </MenuList>
                         </Box>
-                        <MenuList sx={{display: 'flex', justifyContent: 'space-between'}}>
-                            <MenuItemLink to="/activities">
-                                Activities
-                            </MenuItemLink>
-                            <MenuItemLink to="/counter">
-                                Counter
-                            </MenuItemLink>
-                            <MenuItemLink to="/errors">
-                                Errors
-                            </MenuItemLink>
-                        </MenuList>
                        <MenuList sx={{display: 'flex', justifyContent: 'space-between'}}>
                            <Box sx={{display: 'flex', alignItems: 'center'}}>
                                {currentUser ? (
@@ -59,7 +61,6 @@ export default function NavBar() {
                        </MenuList>
                     </Toolbar>
                 </Container>
-                
                 <Observer>
                     {() => uiStore.isLoading ? (
                         <LinearProgress

@@ -3,9 +3,9 @@ export type Profile = {
     displayName: string
     bio?: string
     imageUrl?: string,
-    following: boolean,
-    followersCount: number
-    followingsCount: number
+    following?: boolean,
+    followersCount?: number
+    followingsCount?: number
 }
 
 export type Photo = {
@@ -16,4 +16,11 @@ export type Photo = {
 export type EditProfile = {
     displayName: string
     bio?: string
+}
+
+export type ProfileActivity = {
+    id : string
+    title: string
+    category: string
+    date: string
 }

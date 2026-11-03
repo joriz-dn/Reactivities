@@ -4,6 +4,7 @@ import * as React from "react";
 import ProfileGallery from "./ProfileGallery.tsx";
 import ProfileAbout from "./ProfileAbout.tsx";
 import ProfileFollow from "./ProfileFollow.tsx";
+import ProfileActivities from "./ProfileActivities.tsx";
 
 function samePageLinkNavigation(
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
@@ -22,7 +23,7 @@ export default function ProfileContent() {
     const tabContent = [
         {label: "About", content:<ProfileAbout />},
         {label: "Gallery", content: <ProfileGallery /> },
-        {label: "Events", content:<div>Events</div>},
+        {label: "Events", content: <ProfileActivities /> },
         {label: "Followers", content:<ProfileFollow predicate="followers" />},
         {label: "Following", content:<ProfileFollow predicate="followings" />},
     ]

@@ -1,3 +1,4 @@
+using Application.Activities.Queries;
 using Application.Profiles.Commands;
 using Application.Profiles.DTOs;
 using Application.Profiles.Queries;
@@ -60,5 +61,11 @@ public class ProfileController : ApiController.BaseApiController
     public async Task<ActionResult<List<UserProfile>>> GetFollowList([FromRoute] string userId, string predicate)
     {
         return HandleResult(await Mediator.Send(new GetFollowings.Query { UserId = userId, Predicate = predicate }));
+    }
+    
+    [HttpGet("{userId}/activities")]
+    public async Task<ActionResult<List<UserProfile>>> GetFollowList([FromQuery] string filter, string userId, CancellationToken cancellationToken)
+    {
+        return HandleResult(await Mediator.Send(new GetProfileActivities.Query { ProfileId = userId, Predicate = filter }, cancellationToken));
     }
 }

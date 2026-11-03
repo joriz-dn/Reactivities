@@ -26,7 +26,7 @@ builder.Services.AddControllers(opt =>
 });
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddCors();
 builder.Services.AddSignalR();
@@ -63,6 +63,9 @@ app.UseCors(options => options.AllowAnyMethod().AllowAnyHeader()
     .AllowCredentials()
     .WithOrigins("http://localhost:3000", "https://localhost:3000" ));
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -70,6 +73,7 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>();
 app.MapHub<CommentHub>("/comments");
+app.MapFallbackToController("Index", "Fallback");
 
 // creating a service scope, when this method goes outside the scope anything we use will dispose by the framework
 using var scope = app.Services.CreateScope();

@@ -21,7 +21,6 @@ type Props = {
 export default function ActivityCard({activity}: Props) {
     const label = activity.isHost ? 'You are Hosting' : 'You are going!';
     const color = activity.isHost ? 'primary' : activity.isGoing ? 'success' : 'default';
-    const variance = activity.isHost ? 'outlined' : activity.isGoing ? 'warning' : 'default'; 
     
     return (
         <Card sx={{borderRadius: 3}}>
@@ -41,7 +40,7 @@ export default function ActivityCard({activity}: Props) {
                     }
                 />
                 <Box sx={{display: "flex", flexDirection:"column", gap:1, m: 2}}>
-                    {(activity.isHost || activity.isGoing) && <Chip label={label} color={color} sx={{borderRadius: 1}} variant={variance}></Chip>}
+                    {(activity.isHost || activity.isGoing) && <Chip label={label} color={color} sx={{borderRadius: 1}}></Chip>}
                     {activity.isCancelled && <Chip label="Cancelled" color="error" sx={{borderRadius: 1}} variant="outlined"></Chip>}
                 </Box>
             </Box>
